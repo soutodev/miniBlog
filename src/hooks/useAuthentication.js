@@ -78,6 +78,36 @@ export const useAuthentication = () => {
 
     }
 
+    // login - sign in
+    const login = async (data) => {
+        checkIfIsCancelled()
+
+        setLoading(true);
+        setError(false);
+
+        try {
+
+            await signInWithEmailAndPassword(auth, data.email, data.password);
+            setLoading(false);
+
+        } catch(e) {
+
+            let systemErrorMessage
+
+
+            if(e.message.includes("user-not-found")) {
+                systemErrorMessage = "Usuário não encontrado"
+            } else if(e.message.includes("wrong-password")) {
+                systemErrorMessage = "Senha incorreta"
+            } else {
+                systemErrorMessage = "Ocorreu um erro, por favor, tente mais tarde."
+            }
+
+            setError(systemErrorMessage);
+            setLoading(false);
+        }
+    }
+
     useEffect(() => {
         return () => setCancelled(true);
     }, [])
@@ -88,5 +118,6 @@ export const useAuthentication = () => {
         error,
         loading,
         logout,
+        login,
     }
 }
