@@ -6,11 +6,11 @@ import React from 'react'
 
 const PostDetails = ({ post }) => {
   return (
-    <div>
+    <div className={styles.post_details}>
         <img src={post.image} alt={post.title} />
         <h2>{post.title}</h2>
-        <p>{post.createdBy}</p>
-        <div>
+        <p className={styles.createdBy}>{post.createdBy}</p>
+        <div className={styles.tags}>
             {post.tagsArray.map((tag) => (
                 <p key={tag}>
                     <span>#</span>{tag}
